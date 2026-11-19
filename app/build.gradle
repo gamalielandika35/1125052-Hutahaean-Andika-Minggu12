@@ -34,7 +34,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = 'ppbo12.App'
+    mainClass = 'ppbo12.Main'
 }
 
 tasks.named('test') {
