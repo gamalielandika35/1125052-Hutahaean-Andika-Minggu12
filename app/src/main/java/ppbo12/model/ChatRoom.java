@@ -7,15 +7,29 @@ import java.util.List;
 public class ChatRoom {
     private String roomName;
     private List<User> members;
+    private List<String> badwords;
 
     public ChatRoom(String roomName) {
         this.roomName = roomName;
         members = new ArrayList<User>();
+        badwords = new ArrayList<String>();
     }
 
     public void registerUser(User user) {
         members.add(user);
         user.setChatRoom(this);
+    }
+
+    public void addBadword(String badword) {
+        badwords.add(badword);
+    }
+
+    String filtermessage(String message) {
+        String filteredMessage = message;
+        for (String badword : badwords) {
+            filteredMessage = filteredMessage.replaceAll("(?i)" + badword, "****");
+        }
+        return filteredMessage;
     }
 
     public void sendBroadcast(User sender, String message) {

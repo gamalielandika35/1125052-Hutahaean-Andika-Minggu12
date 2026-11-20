@@ -19,5 +19,16 @@ public class Main {
         budi.send("Halo Semuany");
 
         budi.sendPrivate("andi", "hai mas halo");
+
+        System.out.println();
+
+        general.addBadword("anjeng");
+        general.addBadword("babi");
+
+        budi.sendPrivate("cici", "anjeng lu");
+
+        
+
+
     }
 }
