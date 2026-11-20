@@ -30,7 +30,19 @@ public class Main {
 
         sports.removeUser(cici);
 
-        
+        System.out.println();
+
+        sports.muteUser(andi);
+
+        andi.send("andi sedang dibungkam para suki");
+
+        budi.sendPrivate("andi", "andi sedang dibungkam para suki");
+
+        System.out.println();
+
+        sports.showHistory();
+
+
 
 
 

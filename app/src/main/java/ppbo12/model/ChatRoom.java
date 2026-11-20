@@ -9,11 +9,15 @@ public class ChatRoom {
     private List<User> members;
     private List<String> badwords;
     private User King;
+    private List<User> muteUsers;
+    private List<String> chatHistory;
 
     public ChatRoom(String roomName) {
         this.roomName = roomName;
         members = new ArrayList<User>();
         badwords = new ArrayList<String>();
+        muteUsers = new ArrayList<User>();
+        chatHistory = new ArrayList<String>();
     }
 
     public void registerUser(User user) {
@@ -29,7 +33,21 @@ public class ChatRoom {
     public User getKing() {
         return King;
     }
+public void muteUser(User user) {
+    if (members.contains(user)) {
+        if (!muteUsers.contains(user)) {
+            muteUsers.add(user);
+            System.out.println(user.getName() + " telah di-mute.");
+        }
+    }
+}
 
+public void unmuteUser(User user) {
+    if (muteUsers.contains(user)) {
+        muteUsers.remove(user);
+        System.out.println(user.getName() + " telah di-unmute.");
+    }
+}
 
 
     public void addBadword(String badword) {
@@ -72,24 +90,39 @@ public class ChatRoom {
         }
     }
     public void sendPrivateMessage(User sender, String recipientName, String message) {
-        if (!members.contains(sender)) {
-            System.out.println(sender.getName() + " bukan anggota " + roomName);
+    if (!members.contains(sender)) {
+        System.out.println(sender.getName() + " bukan anggota " + roomName);
+        return;
+    }
+
+    if (muteUsers.contains(sender)) {
+        System.out.println(sender.getName() + " sedang di-mute. Pesan tidak dikirim.");
+        return;
+    }
+
+    message = filtermessage(message);
+
+    for (User user : members) {
+        if (user.getName().equals(recipientName)) {
+            String history = "[Private " + sender.getName()
+                    + " -> " + recipientName + "]: " + message;
+
+            chatHistory.add(history);
+
+            System.out.println("[ChatRoom - " + roomName + "] " + history);
+
+            user.receivePrivateMessage(sender, message);
             return;
         }
-
-        message = filtermessage(message);
-
-        for (User user : members) {
-            if (user.getName().equals(recipientName)) {
-                System.out.println("[ChatRoom- " + roomName
-                        + " Private " + sender.getName()
-                        + "  " + recipientName + ": " + message);
-
-                user.receivePrivateMessage(sender, message);
-                return;
-            }
-        }
-
-        System.out.println("member" + recipientName + " sudah dihitamkan");
     }
+
+    System.out.println(" member " + recipientName + " sudah dihitamkan");
+}
+public void showHistory() {
+    System.out.println("=== CHAT HISTORY: " + roomName + " ===");
+
+    for (String message : chatHistory) {
+        System.out.println(message);
+    }
+}
 }
