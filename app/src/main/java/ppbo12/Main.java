@@ -16,6 +16,8 @@ public class Main {
         general.registerUser(andi);
         general.registerUser(cici);
 
-        budi.sendGroupMessage(andi, "Halo Semuany");
+        budi.send("Halo Semuany");
+
+        budi.sendPrivate("andi", "hai mas halo");
     }
 }
