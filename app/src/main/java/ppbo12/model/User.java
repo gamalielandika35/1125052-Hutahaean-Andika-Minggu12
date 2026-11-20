@@ -1,12 +1,14 @@
 package ppbo12.model;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User {
     private String name;
-    private ChatRoom chatRoom;
+    private List<ChatRoom> chatRooms;
 
     public User(String name) {
         this.name = name;
-        this.chatRoom = null;
+        this.chatRooms = new ArrayList<ChatRoom>();
     }
 
     public String getName() {
@@ -14,23 +16,21 @@ public class User {
     }
 
     public void setChatRoom(ChatRoom chatRoom) {
-        this.chatRoom = chatRoom;
+        this.chatRooms.add(chatRoom);
     }
     public void send(String message) {
         System.out.println("[" + name + "]: Memproses pengiriman pesan grups");
-        chatRoom.sendBroadcast(this, message);
-    }
-    public void sendGroupMessage(User receiver, String message) {
-        if (chatRoom != null) {
+        for (ChatRoom chatRoom : chatRooms) {
             chatRoom.sendBroadcast(this, message);
         }
     }
-
      public void sendPrivate(String recipientName, String message) {
         System.out.println("[" + name + "]: Mengirim pesan privat ke-"
                 + recipientName + "");
 
-        chatRoom.sendPrivateMessage(this, recipientName, message);
+        for (ChatRoom chatRoom : chatRooms) {
+            chatRoom.sendPrivateMessage(this, recipientName, message);
+        }
     }
 
     public void receiveMessage(User sender, String message) {

@@ -7,14 +7,15 @@ public class Main {
     public static void main(String[] args) {
 
         ChatRoom general = new ChatRoom("General");
+        ChatRoom sports = new ChatRoom("Sports");
 
         User budi = new User("Budi");
         User andi = new User("Andi");
         User cici = new User("Cici");
 
         general.registerUser(budi);
-        general.registerUser(andi);
-        general.registerUser(cici);
+        sports.registerUser(andi);
+        sports.registerUser(cici);
 
         budi.send("Halo Semuany");
 
@@ -27,7 +28,13 @@ public class Main {
 
         budi.sendPrivate("cici", "anjeng lu");
 
+        sports.removeUser(cici);
+
         
+
+
+
+
 
 
     }
